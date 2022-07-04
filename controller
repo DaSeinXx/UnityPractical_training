@@ -22,6 +22,8 @@ public class Controller : MonoBehaviour
     public Camera WeaponCamera;
     
     public Transform CameraPosition;
+     public Transform levelbox;
+     public Transform levelpage;
     public Transform WeaponPosition;
     
     public Weapon[] startingWeapons;
@@ -100,9 +102,51 @@ public class Controller : MonoBehaviour
         m_VerticalAngle = 0.0f;
         m_HorizontalAngle = transform.localEulerAngles.y;
     }
-
+bool fl=false;
     void Update()
     {
+        if(Vector3.Distance(this.GetComponent<Transform>().position,level.GetComponent<Transform>().position)<5){
+            if(Input.GetKeyUp(KeyCode.D)){
+                fl=!fl;
+            }  
+        }else{
+        fl=false;
+        }
+        if(fl){
+            levelpage.GetComponent<CanvasGroup>().alpha = 1;
+        }else{
+            levelpage.GetComponent<CanvasGroup>().alpha = 0;
+        }
+        if(fl){
+            if(GameSystem.Instance.m_score>=10&&Input.GetKeyUp(KeyCode.J)){
+                GameSystem.Instance.m_score-=10;
+                GameSystemInfo.Instance.UpdateScore(GameSystem.Instance.m_score);
+                 PlayerSpeed +=3;
+                 RunningSpeed +=3;
+                 JumpSpeed +=3;
+            }//速度
+            if(GameSystem.Instance.m_score>=10&&Input.GetKeyUp(KeyCode.K)){
+                GameSystem.Instance.m_score-=10;
+                GameSystemInfo.Instance.UpdateScore(GameSystem.Instance.m_score);
+                Target.Instance.extra_damage+=5;
+            }//伤害
+            if(GameSystem.Instance.m_score>=10&&Input.GetKeyUp(KeyCode.L)){
+                GameSystem.Instance.m_score-=10;
+                GameSystemInfo.Instance.UpdateScore(GameSystem.Instance.m_score);
+                PickupWeapon(startingWeapons[1]);
+                ChangeWeapon(1);
+            }//武器1/弹药
+            if(GameSystem.Instance.m_score>=10&&Input.GetKeyUp(KeyCode.L)){
+                GameSystem.Instance.m_score-=10;
+                GameSystemInfo.Instance.UpdateScore(GameSystem.Instance.m_score);
+                PickupWeapon(startingWeapons[2]);
+                ChangeWeapon(2);
+            }//武器2/弹药
+        }
+        
+        
+        
+        
         if (CanPause && Input.GetButtonDown("Menu"))
         {
             PauseMenu.Instance.Display();
