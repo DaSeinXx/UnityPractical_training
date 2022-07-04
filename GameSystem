@@ -19,7 +19,8 @@ public class GameSystem : MonoBehaviour
     public float TargetMissedPenalty = 1.0f;
     public AudioSource BGMPlayer;
     public AudioClip EndGameSound;
-    
+    public Tranform endbox;//
+    public int m_goal;//
     public float RunTime => m_Timer;
     public int TargetCount => m_TargetCount;
     public int DestroyedTarget => m_TargetDestroyed;
@@ -29,9 +30,9 @@ public class GameSystem : MonoBehaviour
     bool m_TimerRunning = false;
     
     int m_TargetCount;
-    int m_TargetDestroyed;
+    public int m_TargetDestroyed;
 
-    int m_Score = 0;
+    public int m_Score = 0;
 
     void Awake()
     {
@@ -175,6 +176,9 @@ public class GameSystem : MonoBehaviour
 
     void Update()
     {
+        if(m_TargetDestroyed==m_goal){
+            endbox.GetComponent<Transform>().scale=new Vecor3(1000,1000,1000);
+        }//
         if (m_TimerRunning)
         {
             m_Timer += Time.deltaTime;
@@ -204,7 +208,9 @@ public class GameSystem : MonoBehaviour
     
     public void TargetDestroyed(int score)
     {
-        m_TargetDestroyed += 1;
+        if(score>0){
+            m_TargetDestroyed += 1;            
+        }
         m_Score += score;
 
         GameSystemInfo.Instance.UpdateScore(m_Score);
