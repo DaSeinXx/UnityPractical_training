@@ -104,9 +104,13 @@ public class Controller : MonoBehaviour
         m_HorizontalAngle = transform.localEulerAngles.y;
     }
 bool fl=false;
+public float health;
     void Update()
     {
-        if(Vector3.Distance(this.GetComponent<Transform>().position,level.GetComponent<Transform>().position)<5){
+        if(health<=0){
+        GameSystem.Instance.endbox.GetComponent<Transform>().scale=new Vecor3(1000,1000,1000);
+        }
+        if(Vector3.Distance(this.GetComponent<Transform>().position,levelbox.GetComponent<Transform>().position)<5){
             if(Input.GetKeyUp(KeyCode.D)){
                 fl=!fl;
             }  
