@@ -14,7 +14,6 @@ public class Target : MonoBehaviour
     [Header("Audio")]
     public RandomPlayer HitPlayer;
     public AudioSource IdleSource;
-    
     public bool Destroyed => m_Destroyed;
 
     bool m_Destroyed = false;
@@ -34,10 +33,16 @@ public class Target : MonoBehaviour
         if(IdleSource != null)
             IdleSource.time = Random.Range(0.0f, IdleSource.clip.length);
     }
-
+    void OnTriggerEnter(Collider other){
+        other.health-=1;
+    }
+    void OntriggerStay(Collider other){
+        other.health-=1/60.f;
+    }
+public float extra_damage=0;
     public void Got(float damage)
     {
-        m_CurrentHealth -= damage;
+        m_CurrentHealth -= (damage+extra_damage);
         
         if(HitPlayer != null)
             HitPlayer.PlayRandom();
