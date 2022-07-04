@@ -33,6 +33,14 @@ public class Target : MonoBehaviour
         if(IdleSource != null)
             IdleSource.time = Random.Range(0.0f, IdleSource.clip.length);
     }
+    void update(){
+        Vecor3 a=Controller.Instance.GetComponent<Transform>().position;
+        Vecor3 b=this.Instance.GetComponent<Transform>().position;
+        if(Vector3.Distance(a,b)<2){
+            this.Instance.GetComponent<BoxCollider>().istrigger=true;
+        }else{
+            this.Instance.GetComponent<BoxCollider>().istrigger=false;
+    }
     void OnTriggerEnter(Collider other){
         other.health-=1;
     }
