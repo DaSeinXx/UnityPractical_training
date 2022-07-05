@@ -21,8 +21,8 @@ public class GameSystem : MonoBehaviour
     public float TargetMissedPenalty = 1.0f;
     public AudioSource BGMPlayer;
     public AudioClip EndGameSound;
-    public Tranform endbox;//
     public int m_goal;//
+    public Transform endbox;//
     public Transform info;//
     public float RunTime => m_Timer;
     public int TargetCount => m_TargetCount;
@@ -176,10 +176,13 @@ public class GameSystem : MonoBehaviour
         GameSystemInfo.Instance.UpdateScore(0);
         LevelSelectionUI.Instance.Init();
     }
-
+public float goal_time=120;
     void Update()
     {
-        info.GetComponent<TMP_Text>().text ="<color=#0000ff>"+string.Format("{0:0000.00}", m_Timer);//
+        if(m_Timer>= goal_time){
+          endbox.GetComponent<Transform>().scale=new Vecor3(1000,1000,1000);
+        }
+        info.GetComponent<TMP_Text>().text ="<color=#0000ff>"+string.Format("{0:0000.00}",goal_time- m_Timer);//
         if(m_TargetDestroyed==m_goal){
             endbox.GetComponent<Transform>().scale=new Vecor3(1000,1000,1000);
         }//
