@@ -40,6 +40,10 @@ public class Target : MonoBehaviour
             this.Instance.GetComponent<BoxCollider>().istrigger=true;
         }else{
             this.Instance.GetComponent<BoxCollider>().istrigger=false;
+        if(Vector3.Distance(a,b)<2){
+            this.Instance.GetComponent<Transform>().potion=(a-b)/50;
+            transform.LookAt(Controller.Instance.transform);
+        }
     }
     void OnTriggerEnter(Collider other){
         other.health-=1;
